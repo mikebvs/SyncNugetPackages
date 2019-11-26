@@ -38,14 +38,12 @@ namespace MoveNugetFiles
                 {
                     Console.WriteLine(dirExists.ToString());
                 }
-                //if (nugetPackages.Contains(System.IO.Path.GetFileName(dir)))
                 if(dirExists == true)
                 {
                     AddOnlyNeededVersions(dir, nugetPackages);
                 }
                 else
                 {
-                    //Console.WriteLine("Trying to move " + dir + " to: " + corePackages + "\\" + System.IO.Path.GetFileName(dir));
                     Console.WriteLine("Trying to move " + dir + " to: " + corePackages);
                     System.IO.Directory.Move(dir, corePackages+"\\"+System.IO.Path.GetFileName(dir));
                 }
@@ -76,7 +74,6 @@ namespace MoveNugetFiles
             foreach(string toAddSub in toAddVersions)
             {
                 bool dirExists = coreNugetSubDir.Exists(s => s.Contains(System.IO.Path.GetFileName(toAddSub)));
-                //if (!coreNugetSubDir.Contains(toAddSub))
                 if(dirExists == false)
                 {
                     Console.WriteLine("Trying to move " + toAddSub + " to: " + coreNugetDir);
