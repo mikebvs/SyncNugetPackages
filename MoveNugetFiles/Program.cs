@@ -256,8 +256,10 @@ namespace MoveNugetFiles
                     "Source directory does not exist or could not be found: "
                     + sourceDirName);
             }
-
-            DirectoryInfo[] dirs = dir.GetDirectories();
+            List<DirectoryInfo> dirs = new List<DirectoryInfo>();
+            dirs = dir.GetDirectories().ToList<DirectoryInfo>();
+            dirs.RemoveAll(item => item.FullName.EndsWith(".xaml") || item.FullName.Contains("visualstudio") || item.FullName == "uipath" || item.FullName == "bitmiracle.docotic.pdf" || item.FullName.Contains("uipath.vision") || item.FullName.Contains("runtime.win") || item.FullName.Contains("system.") || item.FullName.Contains("entityframework"));
+            //DirectoryInfo[] dirs = dir.GetDirectories();
             // If the destination directory doesn't exist, create it.
             if (!Directory.Exists(destDirName))
             {
@@ -266,8 +268,12 @@ namespace MoveNugetFiles
 
             // Get the files in the directory and copy them to the new location.
             List<FileInfo> files = new List<FileInfo>();
+            //files = dir.GetFiles("*uipath*").ToList<FileInfo>();
+            //files.AddRange(dir.GetFiles("*newtonsoft*").ToList<FileInfo>());
+            //files.AddRange(dir.GetFiles("_*").ToList<FileInfo>());
+            //files.AddRange(dir.GetFiles("*microsoft*").ToList<FileInfo>());
             files = dir.GetFiles().ToList<FileInfo>();
-            files.RemoveAll(item => item.FullName.EndsWith(".xaml"));
+            files.RemoveAll(item => item.FullName.EndsWith(".xaml") || item.FullName.Contains("visualstudio") || item.FullName.Contains("runtime.win") || item.FullName.Contains("system."));
             foreach (FileInfo file in files)
             {
                 string temppath = Path.Combine(destDirName, file.Name);
